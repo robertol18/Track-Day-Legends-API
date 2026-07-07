@@ -1,26 +1,27 @@
 # Track Day Legends API 🏁
 
-¡Bienvenido a **Track Day Legends API**! Esta es una API REST elegante y robusta diseñada para petrolheads, entusiastas del motor y pilotos amateur de track days. Permite gestionar un catálogo técnico de deportivos icónicos y coches preparados para circuito, organizados por modelos de coches (`CarModel`) y sus respectivas especificaciones o variantes de motorización (`EngineSpec`).
+Welcome to the **Track Day Legends API**! This is an elegant, high-performance, and robust REST API designed for petrolheads, track day enthusiasts, and amateur racing drivers. It manages a technical catalog of iconic sports cars (`CarModel`) and their mechanical variants or specifications (`EngineSpec`).
 
-## 🏗️ Arquitectura del Proyecto
+## 🏗️ Architectural Design
 
-El proyecto está diseñado siguiendo rigurosamente los principios de **Arquitectura Hexagonal (Puertos y Adaptadores)** y **Diseño Guiado por el Dominio (DDD)** para garantizar la máxima mantenibilidad, escalabilidad y testabilidad:
+The project is built following strict **Hexagonal Architecture (Ports and Adapters)** and **Domain-Driven Design (DDD)** principles to ensure maximum maintainability, scalability, and testability:
 
-1. **Dominio puro (`domain`)**: Contiene las entidades esenciales de negocio (`CarModel` y `EngineSpec`) completamente libres de dependencias de Spring, JPA, Jackson u otros frameworks.
-2. **Aplicación (`application`)**: Define los casos de uso (interfaces de entrada `in` y adaptadores de salida `out`) e implementa la lógica de negocio como POJOs puros de Java.
-3. **Persistencia (`adapter.outbound.persistence`)**: Adaptadores para Spring Data JPA sobre una base de datos **H2 en memoria**, con mappers manuales explícitos para no acoplar el dominio a la base de datos.
-4. **Web (`adapter.inbound.web`)**: Adaptadores REST con controladores limpios, DTOs de petición y respuesta con validaciones declarativas robustas, mappers dedicados y un manejador centralizado de excepciones (`GlobalExceptionHandler`).
-5. **Infraestructura (`infrastructure`)**: Configuración explícita de Spring Beans (`BeanConfiguration`) e inicialización de datos de demo realistas (`DemoDataLoader`).
+1. **Pure Domain (`domain`)**: Houses the core business entities (`CarModel` and `EngineSpec`) completely decoupled from Spring, JPA, Jackson, or other infrastructure frameworks.
+2. **Application (`application`)**: Defines use cases (inbound ports `in` and outbound ports `out`) and implements business logic as pure Java POJOs.
+3. **Persistence Adapter (`adapter.outbound.persistence`)**: Interacts with Spring Data JPA over an **H2 in-memory database**, utilizing explicit manual mappers to prevent leaking JPA entities into the domain.
+4. **Web Adapter (`adapter.inbound.web`)**: Implements clean REST controllers, declarative request validation DTOs, manual mappers, and a centralized `GlobalExceptionHandler`.
+5. **Infrastructure (`infrastructure`)**: Configures manual Spring Beans via `BeanConfiguration` and loads rich, realistic demo data with `DemoDataLoader`.
 
-> **Nota de Diseño**: No se utiliza Lombok ni MapStruct para favorecer un código Java 17 explícito, transparente y de altísima legibilidad.
+> **Design Note**: Lombok and MapStruct are intentionally omitted in favor of explicit, standard, and highly readable Java 17 code.
 
 ---
 
-## 🗂️ Árbol de Directorios
+## 🗂️ Directory Tree
 
 ```text
 Track-Day-Legends-API/
 ├── pom.xml
+├── README.md
 └── src/
     ├── main/
     │   ├── java/
@@ -29,102 +30,100 @@ Track-Day-Legends-API/
     │   │           └── trackdaylegends/
     │   │               ├── TrackDayLegendsApplication.java
     │   │               ├── domain/
-    │   │               │   ├── exception/ (Excepciones específicas del dominio)
-    │   │               │   └── model/ (Modelos puros: CarModel, EngineSpec)
+    │   │               │   ├── exception/ (Domain exceptions)
+    │   │               │   └── model/ (Pure models: CarModel, EngineSpec)
     │   │               ├── application/
-    │   │               │   ├── port/ (Puertos de entrada/salida)
-    │   │               │   └── usecase/ (Implementaciones de casos de uso sin estereotipos)
+    │   │               │   ├── port/ (Inbound & Outbound ports)
+    │   │               │   └── usecase/ (Pure Java service/use case implementations)
     │   │               ├── adapter/
-    │   │               │   ├── inbound/web/ (Controladores REST, DTOs, mappers web, handlers)
-    │   │               │   └── outbound/persistence/ (Entidades JPA, repositorios, adaptadores)
+    │   │               │   ├── inbound/web/ (REST controllers, DTOs, mappers, handlers)
+    │   │               │   └── outbound/persistence/ (JPA Entities, repositories, adapters)
     │   │               └── infrastructure/
-    │   │                   ├── config/ (Wiring manual de Beans de Spring)
-    │   │                   └── bootstrap/ (Carga inicial de datos demo)
+    │   │                   ├── config/ (Manual Spring Bean wiring)
+    │   │                   └── bootstrap/ (Initial demo data loader)
     │   └── resources/
     │       └── application.properties
-    └── test/ (Tests unitarios e integración JUnit 5 + Mockito)
+    └── test/ (Unit & Integration tests using JUnit 5 + Mockito)
 ```
 
 ---
 
-## 🚀 Cómo Ejecutar el Proyecto
+## 🚀 How to Run the Project
 
-### Requisitos previos:
-- **Java 17** o superior instalado.
-- **Maven 3.8+** instalado.
+### Prerequisites:
+- **Java 17** or higher installed.
+- **Maven 3.8+** installed.
 
-### Pasos para compilar y arrancar:
-1. Clona o accede a la carpeta raíz del proyecto:
+### Build and Run:
+1. Navigate to the root directory of the project:
    ```bash
    cd Track-Day-Legends-API
    ```
-2. Compila el proyecto y ejecuta los tests para validar la integridad del código:
+2. Build the project and run the tests:
    ```bash
    mvn clean test
    ```
-3. Ejecuta la aplicación Spring Boot:
+3. Run the Spring Boot application:
    ```bash
    mvn spring-boot:run
    ```
-4. El servidor arrancará en el puerto **`8080`** de `localhost`.
-5. Puedes acceder a la **Consola H2** en tu navegador:
+4. The server will start on port **`8080`**.
+5. Access the **H2 Database Web Console** at:
    - **URL**: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
    - **JDBC URL**: `jdbc:h2:mem:trackdaydb`
    - **Username**: `sa`
-   - **Password**: *(vacío)*
+   - **Password**: *(leave empty)*
 
 ---
 
-## 🔌 Endpoints de la API
+## 🔌 API Endpoints
 
-### 🚗 Gestión de Modelos de Coche (`CarModel`)
+### 🚗 Car Model Management (`CarModel`)
 
-| Método | Endpoint | Descripción | Parámetros de Filtro (Opcionales) |
+| Method | Endpoint | Description | Optional Filter Parameters |
 | :--- | :--- | :--- | :--- |
-| **GET** | `/api/car-models` | Listar todos los modelos | `brand`, `year`, `segment`, `active` |
-| **GET** | `/api/car-models/{id}` | Detalle de un modelo y sus motorizaciones | |
-| **POST** | `/api/car-models` | Crear un nuevo modelo de coche | *(Cuerpo JSON)* |
-| **PUT** | `/api/car-models/{id}` | Actualizar un modelo de coche | *(Cuerpo JSON)* |
-| **PATCH** | `/api/car-models/{id}/deactivate` | Desactivar un modelo y sus variantes | |
-| **DELETE** | `/api/car-models/{id}` | Eliminar un modelo de coche | |
+| **GET** | `/api/car-models` | List all car models | `brand`, `year`, `segment`, `active` |
+| **GET** | `/api/car-models/{id}` | Retrieve a model with all its engine specs | |
+| **POST** | `/api/car-models` | Create a new car model | *(JSON Payload)* |
+| **PUT** | `/api/car-models/{id}` | Update an existing car model | *(JSON Payload)* |
+| **PATCH** | `/api/car-models/{id}/deactivate` | Deactivate a car model and its specs | |
+| **DELETE** | `/api/car-models/{id}` | Delete a car model | |
 
-### ⚙️ Gestión de Variantes Mecánicas (`EngineSpec`)
+### ⚙️ Engine Specification Management (`EngineSpec`)
 
-| Método | Endpoint | Descripción | Parámetros de Filtro (Opcionales) |
+| Method | Endpoint | Description | Optional Filter Parameters |
 | :--- | :--- | :--- | :--- |
-| **GET** | `/api/engine-specs` | Listar todas las motorizaciones | `engineType`, `minHorsepower`, `maxZeroToHundred`, `drivetrain`, `active` |
-| **GET** | `/api/engine-specs/{id}` | Obtener una motorización por ID | |
-| **POST** | `/api/car-models/{carModelId}/engine-specs` | Crear motorización para un coche | *(Cuerpo JSON)* |
-| **PUT** | `/api/engine-specs/{id}` | Actualizar una motorización | *(Cuerpo JSON)* |
-| **PATCH** | `/api/engine-specs/{id}/deactivate` | Desactivar una motorización | |
-| **DELETE** | `/api/engine-specs/{id}` | Eliminar una motorización | |
+| **GET** | `/api/engine-specs` | List all engine specifications | `engineType`, `minHorsepower`, `maxZeroToHundred`, `drivetrain`, `active` |
+| **GET** | `/api/engine-specs/{id}` | Retrieve an engine spec by ID | |
+| **POST** | `/api/car-models/{carModelId}/engine-specs` | Create an engine spec for a specific car model | *(JSON Payload)* |
+| **PUT** | `/api/engine-specs/{id}` | Update an engine specification | *(JSON Payload)* |
+| **PATCH** | `/api/engine-specs/{id}/deactivate` | Deactivate an engine specification | |
+| **DELETE** | `/api/engine-specs/{id}` | Delete an engine specification | |
 
-### 📈 Consultas de Rendimiento y Estadísticas
+### 📈 Metrics and Analytics
 
-| Método | Endpoint | Descripción |
+| Method | Endpoint | Description |
 | :--- | :--- | :--- |
-| **GET** | `/api/engine-specs/search/fastest` | Top 5 motorizaciones más rápidas por aceleración 0-100 km/h |
-| **GET** | `/api/engine-specs/search/most-powerful` | Top 5 motorizaciones con más caballos de potencia |
-| **GET** | `/api/stats/summary` | Cuadro de mando global (totales, medias, récord 0-100, etc.) |
-| **GET** | `/api/health/demo` | Endpoint de diagnóstico simple |
+| **GET** | `/api/engine-specs/search/fastest` | Retrieve top 5 fastest engine specs by 0-100 km/h acceleration |
+| **GET** | `/api/engine-specs/search/most-powerful` | Retrieve top 5 most powerful engine specs by horsepower |
+| **GET** | `/api/stats/summary` | Global database dashboard statistics (totals, averages, fastest 0-100, etc.) |
+| **GET** | `/api/health/demo` | Quick API diagnostic health check |
 
 ---
 
-## 💡 Ejemplos de Peticiones `curl` reales
+## 💡 Practical `curl` Request Examples
 
-A continuación se muestran ejemplos prácticos listos para probar la API una vez arrancada:
-
-### 1. Listar modelos de coches (filtrando por la marca "Toyota")
+### 1. List car models (filtering by brand "Toyota")
 ```bash
 curl -X GET "http://localhost:8080/api/car-models?brand=Toyota" -H "Accept: application/json"
 ```
 
-### 2. Obtener un modelo por ID con todas sus motorizaciones (ID 1: Toyota GR Yaris)
+### 2. Get a car model with all its associated engine specs (ID 1: Toyota GR Yaris)
 ```bash
 curl -X GET "http://localhost:8080/api/car-models/1" -H "Accept: application/json"
 ```
 
-### 3. Crear un nuevo modelo de coche (Alpine A110 R)
+### 3. Create a new car model (Alpine A110 R)
 ```bash
 curl -X POST "http://localhost:8080/api/car-models" \
   -H "Content-Type: application/json" \
@@ -134,23 +133,23 @@ curl -X POST "http://localhost:8080/api/car-models" \
     "year": 2024,
     "segment": "S",
     "bodyStyle": "Coupe",
-    "country": "Francia",
-    "description": "La versión radical enfocada 100% a pista del icónico Alpine A110, repleta de fibra de carbono para reducir peso al extremo."
+    "country": "France",
+    "description": "The hardcore, 100% track-focused edition of the legendary Alpine A110, extensively utilizing carbon fiber to shed weight."
   }'
 ```
 
-### 4. Crear una motorización extrema asociada al modelo creado (ID del modelo creado, por ejemplo, ID 9)
+### 4. Create a performance engine specification for the model above (e.g., model ID 9)
 ```bash
 curl -X POST "http://localhost:8080/api/car-models/9/engine-specs" \
   -H "Content-Type: application/json" \
   -d '{
     "versionName": "A110 R Turini",
-    "engineType": "Gasolina Turbo",
+    "engineType": "Turbo Petrol",
     "engineConfiguration": "1.8L L4",
     "displacementCc": 1798,
     "horsepowerHp": 300,
     "torqueNm": 340,
-    "transmission": "EDC doble embrague 7 vel.",
+    "transmission": "7-speed dual-clutch EDC",
     "drivetrain": "RWD",
     "zeroToHundredSeconds": 3.9,
     "topSpeedKph": 285,
@@ -158,42 +157,42 @@ curl -X POST "http://localhost:8080/api/car-models/9/engine-specs" \
   }'
 ```
 
-### 5. Obtener las motorizaciones más potentes (Top 5 más potentes de la base de datos)
+### 5. Retrieve top 5 most powerful engine specs in the database
 ```bash
 curl -X GET "http://localhost:8080/api/engine-specs/search/most-powerful" -H "Accept: application/json"
 ```
 
-### 6. Obtener estadísticas de todo el catálogo técnico
+### 6. Get global metrics and statistics
 ```bash
 curl -X GET "http://localhost:8080/api/stats/summary" -H "Accept: application/json"
 ```
 
-### 7. Comprobar validaciones enviando un modelo de coche inválido (año incorrecto y marca vacía)
+### 7. Trigger validation rules by posting an invalid payload (blank brand, invalid year)
 ```bash
 curl -X POST "http://localhost:8080/api/car-models" \
   -H "Content-Type: application/json" \
   -d '{
     "brand": "",
-    "model": "Invalido",
+    "model": "Invalid",
     "year": 1945,
     "segment": "C"
   }'
 ```
-*Respuesta esperada (400 Bad Request):*
+*Expected 400 Bad Request Response:*
 ```json
 {
-  "timestamp": "2026-07-07T17:48:40.123456",
+  "timestamp": "2026-07-07T22:22:38.123456",
   "status": 400,
   "error": "Bad Request",
-  "message": "Error de validación en la petición",
+  "message": "Validation error in request payload",
   "path": "/api/car-models",
   "validationErrors": {
-    "brand": "La marca no puede estar vacía",
-    "year": "El año debe ser como mínimo 1950"
+    "brand": "Brand cannot be empty",
+    "year": "Year must be at least 1950"
   }
 }
 ```
 
 ---
 
-¡Disfruta quemando goma virtual con **Track Day Legends API**! 🏎️💨
+Enjoy burning virtual rubber with the **Track Day Legends API**! 🏎️💨
