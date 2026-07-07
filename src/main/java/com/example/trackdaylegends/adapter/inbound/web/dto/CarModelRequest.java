@@ -7,18 +7,18 @@ import jakarta.validation.constraints.NotNull;
 
 public class CarModelRequest {
 
-    @NotBlank(message = "La marca no puede estar vacía")
+    @NotBlank(message = "Brand cannot be empty")
     private String brand;
 
-    @NotBlank(message = "El modelo no puede estar vacío")
+    @NotBlank(message = "Model cannot be empty")
     private String model;
 
-    @NotNull(message = "El año es obligatorio")
-    @Min(value = 1950, message = "El año debe ser como mínimo 1950")
-    @Max(value = 2030, message = "El año debe ser como máximo 2030")
+    @NotNull(message = "Year is mandatory")
+    @Min(value = 1950, message = "Year must be at least 1950")
+    @Max(value = 2030, message = "Year must be at most 2030")
     private Integer year;
 
-    @NotBlank(message = "El segmento no puede estar vacío")
+    @NotBlank(message = "Segment cannot be empty")
     private String segment;
 
     private String bodyStyle;

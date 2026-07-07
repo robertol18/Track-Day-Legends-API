@@ -27,19 +27,19 @@ public class DemoDataLoader implements CommandLineRunner {
                 2021,
                 "B",
                 "Hatchback",
-                "Japón",
-                "Especial de homologación para el WRC. Desarrollado directamente por Gazoo Racing, cuenta con tracción total GR-Four avanzada y un chasis ultraligero que lo convierte en un monstruo de tramos y track days ratoneros."
+                "Japan",
+                "WRC homologation special. Developed directly by Gazoo Racing, it features the advanced GR-Four all-wheel-drive system and an ultra-lightweight chassis, making it a monster on tight B-roads and track days."
         );
         grYaris = carModelUseCase.createCarModel(grYaris);
 
         engineSpecUseCase.createEngineSpec(grYaris.getId(), EngineSpec.create(
                 "RZ / Circuit Pack",
-                "Gasolina Turbo",
+                "Turbo Petrol",
                 "1.6L L3 (G16E-GTS)",
                 1618,
                 261,
                 360,
-                "Manual 6 velocidades",
+                "6-speed manual",
                 "AWD",
                 5.5,
                 230,
@@ -54,19 +54,19 @@ public class DemoDataLoader implements CommandLineRunner {
                 2023,
                 "C",
                 "Hatchback",
-                "Japón",
-                "La generación FL5 representa la cumbre de la tracción delantera. Con una puesta a punto de chasis quirúrgica y un refinamiento aerodinámico excepcional, tiene récords de FWD en circuitos legendarios como Suzuka y Nürburgring."
+                "Japan",
+                "The FL5 generation represents the pinnacle of front-wheel-drive dynamics. With surgical chassis tuning and exceptional aerodynamic refinement, it holds FWD lap records on legendary tracks like Suzuka and Nürburgring."
         );
         civicTypeR = carModelUseCase.createCarModel(civicTypeR);
 
         engineSpecUseCase.createEngineSpec(civicTypeR.getId(), EngineSpec.create(
                 "Type R (FL5)",
-                "Gasolina Turbo",
+                "Turbo Petrol",
                 "2.0L L4 (K20C1)",
                 1996,
                 329,
                 420,
-                "Manual 6 velocidades",
+                "6-speed manual",
                 "FWD",
                 5.4,
                 275,
@@ -81,19 +81,19 @@ public class DemoDataLoader implements CommandLineRunner {
                 2022,
                 "D",
                 "Sedan",
-                "Alemania",
-                "La berlina deportiva de referencia mundial en su generación G80. Ofrece una rigidez estructural extrema, un motor S58 derivado de competición y una agilidad impropia de su tamaño."
+                "Germany",
+                "The reference world standard for sports sedans in its G80 generation. It offers extreme structural rigidity, a motorsport-derived S58 engine, and an agility that defies its footprint."
         );
         m3 = carModelUseCase.createCarModel(m3);
 
         engineSpecUseCase.createEngineSpec(m3.getId(), EngineSpec.create(
                 "Competition RWD",
-                "Gasolina Twin-Turbo",
+                "Twin-Turbo Petrol",
                 "3.0L L6 (S58)",
                 2993,
                 510,
                 650,
-                "Automática 8 velocidades (M Steptronic)",
+                "8-speed automatic (M Steptronic)",
                 "RWD",
                 3.9,
                 290,
@@ -103,12 +103,12 @@ public class DemoDataLoader implements CommandLineRunner {
 
         engineSpecUseCase.createEngineSpec(m3.getId(), EngineSpec.create(
                 "Competition M xDrive",
-                "Gasolina Twin-Turbo",
+                "Twin-Turbo Petrol",
                 "3.0L L6 (S58)",
                 2993,
                 510,
                 650,
-                "Automática 8 velocidades (M Steptronic)",
+                "8-speed automatic (M Steptronic)",
                 "AWD",
                 3.5,
                 290,
@@ -123,19 +123,19 @@ public class DemoDataLoader implements CommandLineRunner {
                 2024,
                 "S",
                 "Coupe",
-                "Alemania",
-                "La silueta más icónica del automovilismo deportivo (generación 992). El 'Nueveonce' destaca por su motor bóxer trasero, reparto de pesos optimizado y un tacto de conducción legendario apto tanto para el día a día como para batir cronos."
+                "Germany",
+                "The most iconic silhouette in motorsport history (992 generation). The 'Nine-Eleven' stands out for its rear-mounted boxer engine, optimized weight distribution, and a legendary driving feel suited for both daily use and record lap times."
         );
         porsche911 = carModelUseCase.createCarModel(porsche911);
 
         engineSpecUseCase.createEngineSpec(porsche911.getId(), EngineSpec.create(
                 "Carrera standard",
-                "Gasolina Twin-Turbo",
+                "Twin-Turbo Petrol",
                 "3.0L Boxer 6",
                 2981,
                 385,
                 450,
-                "Automática doble embrague (PDK) 8 vel.",
+                "8-speed dual-clutch (PDK)",
                 "RWD",
                 4.2,
                 293,
@@ -145,12 +145,12 @@ public class DemoDataLoader implements CommandLineRunner {
 
         engineSpecUseCase.createEngineSpec(porsche911.getId(), EngineSpec.create(
                 "Carrera GTS",
-                "Gasolina Twin-Turbo",
+                "Twin-Turbo Petrol",
                 "3.0L Boxer 6",
                 2981,
                 480,
                 570,
-                "Automática doble embrague (PDK) 8 vel.",
+                "8-speed dual-clutch (PDK)",
                 "RWD",
                 3.4,
                 311,
@@ -165,19 +165,19 @@ public class DemoDataLoader implements CommandLineRunner {
                 2023,
                 "C",
                 "Hatchback",
-                "Alemania",
-                "Compacto superdeportivo que enamora por el rugido único de su motor de 5 cilindros y el novedoso sistema RS Torque Splitter, que permite derivar toda la potencia del eje trasero a una sola rueda para una dinámica de locura."
+                "Germany",
+                "A high-performance compact sports car loved for the unique exhaust note of its 5-cylinder engine and the innovative RS Torque Splitter system, which allows torque vectoring to the outer rear wheel for drift-ready dynamics."
         );
         rs3 = carModelUseCase.createCarModel(rs3);
 
         engineSpecUseCase.createEngineSpec(rs3.getId(), EngineSpec.create(
                 "Standard 2.5 TFSI",
-                "Gasolina Turbo",
+                "Turbo Petrol",
                 "2.5L L5 (TFSI)",
                 2480,
                 400,
                 500,
-                "Automática doble embrague (S tronic) 7 vel.",
+                "7-speed dual-clutch (S tronic)",
                 "AWD",
                 3.8,
                 250,
@@ -187,12 +187,12 @@ public class DemoDataLoader implements CommandLineRunner {
 
         engineSpecUseCase.createEngineSpec(rs3.getId(), EngineSpec.create(
                 "Performance Edition",
-                "Gasolina Turbo",
+                "Turbo Petrol",
                 "2.5L L5 (TFSI)",
                 2480,
                 407,
                 500,
-                "Automática doble embrague (S tronic) 7 vel.",
+                "7-speed dual-clutch (S tronic)",
                 "AWD",
                 3.8,
                 300,
@@ -207,19 +207,19 @@ public class DemoDataLoader implements CommandLineRunner {
                 2022,
                 "C",
                 "Hatchback",
-                "Alemania",
-                "El motor de 4 cilindros de producción en serie más potente del mundo (M139) ensamblado a mano bajo la filosofía 'un hombre, un motor'. Ofrece unas prestaciones asombrosas y tracción total inteligente con modo Drift."
+                "Germany",
+                "The world's most powerful series-production 4-cylinder engine (M139), hand-assembled under the 'One Man, One Engine' philosophy. It delivers jaw-dropping performance paired with intelligent AWD and a standard Drift Mode."
         );
         a45s = carModelUseCase.createCarModel(a45s);
 
         engineSpecUseCase.createEngineSpec(a45s.getId(), EngineSpec.create(
                 "AMG 45 S 4MATIC+",
-                "Gasolina Turbo",
+                "Turbo Petrol",
                 "2.0L L4 (M139)",
                 1991,
                 421,
                 500,
-                "Automática doble embrague (AMG SPEEDSHIFT) 8 vel.",
+                "8-speed dual-clutch (AMG SPEEDSHIFT)",
                 "AWD",
                 3.9,
                 270,
@@ -234,19 +234,19 @@ public class DemoDataLoader implements CommandLineRunner {
                 2023,
                 "S",
                 "Coupe",
-                "Francia",
-                "Bajo el lema de ligereza heredado del clásico original de rallyes, este deportivo de motor central pesa solo 1100 kg. Es la agilidad hecha coche, ofreciendo un comportamiento divertido e intuitivo en curvas de montaña."
+                "France",
+                "Embodying the philosophy of lightness inherited from the classic original rally car, this mid-engined French sports car weighs only 1100 kg. It is agility in car form, offering playful and intuitive handling on twisty mountain passes."
         );
         alpine = carModelUseCase.createCarModel(alpine);
 
         engineSpecUseCase.createEngineSpec(alpine.getId(), EngineSpec.create(
                 "Standard 1.8 TCe",
-                "Gasolina Turbo",
+                "Turbo Petrol",
                 "1.8L L4 (TCe)",
                 1798,
                 252,
                 320,
-                "Automática doble embrague (EDC) 7 vel.",
+                "7-speed dual-clutch (EDC)",
                 "RWD",
                 4.5,
                 250,
@@ -256,12 +256,12 @@ public class DemoDataLoader implements CommandLineRunner {
 
         engineSpecUseCase.createEngineSpec(alpine.getId(), EngineSpec.create(
                 "A110 S",
-                "Gasolina Turbo",
+                "Turbo Petrol",
                 "1.8L L4 (TCe)",
                 1798,
                 300,
                 340,
-                "Automática doble embrague (EDC) 7 vel.",
+                "7-speed dual-clutch (EDC)",
                 "RWD",
                 4.2,
                 275,
@@ -276,24 +276,24 @@ public class DemoDataLoader implements CommandLineRunner {
                 2021,
                 "C",
                 "Hatchback",
-                "Francia",
-                "El último de una dinastía gloriosa de Renault Sport. La versión Trophy incorpora el chasis Cup con amortiguadores y muelles rígidos, diferencial autoblocante Torsen y dirección a las 4 ruedas (4Control)."
+                "France",
+                "The last of a glorious dynasty from Renault Sport. The Trophy version features the Cup chassis with stiffer springs and dampers, a Torsen limited-slip differential, and the 4Control four-wheel-steering system."
         );
         meganeRS = carModelUseCase.createCarModel(meganeRS);
 
         engineSpecUseCase.createEngineSpec(meganeRS.getId(), EngineSpec.create(
                 "Trophy 300",
-                "Gasolina Turbo",
+                "Turbo Petrol",
                 "1.8L L4 (TCe)",
                 1798,
                 300,
                 420,
-                "Automática doble embrague (EDC) 6 vel.",
+                "6-speed dual-clutch (EDC)",
                 "FWD",
                 5.7,
                 260,
                 8.0,
                 meganeRS.getId()
-        ));
+                ));
     }
 }

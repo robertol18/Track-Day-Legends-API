@@ -17,7 +17,7 @@ public class CarModelService implements CarModelUseCase {
     @Override
     public CarModel getCarModelById(Long id) {
         return carModelRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Modelo de coche no encontrado con ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Car model not found with ID: " + id));
     }
 
     @Override
@@ -56,7 +56,7 @@ public class CarModelService implements CarModelUseCase {
     @Override
     public void deleteCarModel(Long id) {
         if (!carModelRepository.existsById(id)) {
-            throw new EntityNotFoundException("Modelo de coche no encontrado con ID: " + id);
+            throw new EntityNotFoundException("Car model not found with ID: " + id);
         }
         carModelRepository.deleteById(id);
     }

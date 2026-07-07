@@ -6,35 +6,35 @@ import jakarta.validation.constraints.NotNull;
 
 public class EngineSpecRequest {
 
-    @NotBlank(message = "El nombre de la versión no puede estar vacío")
+    @NotBlank(message = "Version name cannot be empty")
     private String versionName;
 
-    @NotBlank(message = "El tipo de motor no puede estar vacío")
+    @NotBlank(message = "Engine type cannot be empty")
     private String engineType;
 
     private String engineConfiguration;
 
-    @NotNull(message = "La cilindrada es obligatoria")
-    @Min(value = 1, message = "La cilindrada debe ser mayor que 0")
+    @NotNull(message = "Displacement is mandatory")
+    @Min(value = 1, message = "Displacement must be greater than 0")
     private Integer displacementCc;
 
-    @NotNull(message = "La potencia es obligatoria")
-    @Min(value = 1, message = "La potencia debe ser mayor que 0")
+    @NotNull(message = "Horsepower is mandatory")
+    @Min(value = 1, message = "Horsepower must be greater than 0")
     private Integer horsepowerHp;
 
-    @NotNull(message = "El par motor es obligatorio")
-    @Min(value = 1, message = "El par motor debe ser mayor que 0")
+    @NotNull(message = "Torque is mandatory")
+    @Min(value = 1, message = "Torque must be greater than 0")
     private Integer torqueNm;
 
     private String transmission;
     private String drivetrain;
 
-    @NotNull(message = "El tiempo de 0 a 100 es obligatorio")
-    @Min(value = 0, message = "El tiempo de 0 a 100 debe ser mayor que 0")
+    @NotNull(message = "0-100 time is mandatory")
+    @Min(value = 0, message = "0-100 time must be greater than 0")
     private Double zeroToHundredSeconds;
 
-    @NotNull(message = "La velocidad máxima es obligatoria")
-    @Min(value = 1, message = "La velocidad máxima debe ser mayor que 0")
+    @NotNull(message = "Top speed is mandatory")
+    @Min(value = 1, message = "Top speed must be greater than 0")
     private Integer topSpeedKph;
 
     private Double fuelConsumptionL100;

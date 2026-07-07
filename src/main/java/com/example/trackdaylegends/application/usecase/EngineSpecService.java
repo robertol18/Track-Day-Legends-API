@@ -20,7 +20,7 @@ public class EngineSpecService implements EngineSpecUseCase {
     @Override
     public EngineSpec getEngineSpecById(Long id) {
         return engineSpecRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Motorización no encontrada con ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Engine specification not found with ID: " + id));
     }
 
     @Override
@@ -31,7 +31,7 @@ public class EngineSpecService implements EngineSpecUseCase {
     @Override
     public EngineSpec createEngineSpec(Long carModelId, EngineSpec engineSpec) {
         if (!carModelRepository.existsById(carModelId)) {
-            throw new EntityNotFoundException("No se puede crear la motorización. Modelo de coche no encontrado con ID: " + carModelId);
+            throw new EntityNotFoundException("Cannot create engine specification. Car model not found with ID: " + carModelId);
         }
         engineSpec.setCarModelId(carModelId);
         return engineSpecRepository.save(engineSpec);
@@ -67,7 +67,7 @@ public class EngineSpecService implements EngineSpecUseCase {
     @Override
     public void deleteEngineSpec(Long id) {
         if (!engineSpecRepository.existsById(id)) {
-            throw new EntityNotFoundException("Motorización no encontrada con ID: " + id);
+            throw new EntityNotFoundException("Engine specification not found with ID: " + id);
         }
         engineSpecRepository.deleteById(id);
     }

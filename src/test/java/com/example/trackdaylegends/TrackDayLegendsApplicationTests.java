@@ -16,8 +16,8 @@ class TrackDayLegendsApplicationTests {
     @Test
     void contextLoadsAndInitialDataIsPresent() {
         assertNotNull(carModelUseCase);
-        // Verify that our DemoDataLoader initialized the database with 8 track day models
+        // Verify that our DemoDataLoader initialized the database with exactly 8 track day models
         int count = carModelUseCase.getAllCarModels(null, null, null, null).size();
-        assertEquals(8, count, "Deberían haberse cargado exactamente 8 modelos deportivos iniciales");
+        assertEquals(8, count, "Exactly 8 initial track-focused sports car models should have been loaded");
     }
 }
