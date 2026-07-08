@@ -1,6 +1,6 @@
 # Track Day Legends API Project Instructions
 
-This repository follows **Hexagonal Architecture (Ports and Adapters)** and **Domain-Driven Design (DDD)** principles using **Java 17** and **Spring Boot 3**.
+This repository follows **Hexagonal Architecture (Ports and Adapters)** and **Domain-Driven Design (DDD)** principles using **Java 21** and **Spring Boot 3**.
 
 The application models track-focused cars and their technical variants through two core concepts:
 - `CarModel`: the aggregate root for the vehicle model
