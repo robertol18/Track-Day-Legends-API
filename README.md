@@ -12,7 +12,7 @@ The project is built following strict **Hexagonal Architecture (Ports and Adapte
 4. **Web Adapter (`adapter.inbound.web`)**: Implements clean REST controllers, declarative request validation DTOs, manual mappers, and a centralized `GlobalExceptionHandler`.
 5. **Infrastructure (`infrastructure`)**: Configures manual Spring Beans via `BeanConfiguration` and loads rich, realistic demo data with `DemoDataLoader`.
 
-> **Design Note**: Lombok and MapStruct are intentionally omitted in favor of explicit, standard, and highly readable Java 17 code.
+> **Design Note**: Lombok and MapStruct are intentionally omitted in favor of explicit, standard, and highly readable Java 21 code.
 
 ---
 
@@ -51,7 +51,7 @@ Track-Day-Legends-API/
 ## 🚀 How to Run the Project
 
 ### Prerequisites:
-- **Java 17** or higher installed.
+- **Java 21** or higher installed.
 - **Maven 3.8+** installed.
 
 ### Build and Run:
