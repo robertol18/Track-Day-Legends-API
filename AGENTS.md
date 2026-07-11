@@ -50,6 +50,16 @@ mvn spring-boot:run
 - Web adapter: `@WebMvcTest`
 - Persistence adapter: `@DataJpaTest`
 
+## Copilot customization layout
+
+- Global repository instructions live in `.github/copilot-instructions.md`.
+- Task and file-pattern instructions live in `.github/instructions/*.instructions.md`.
+- Reusable workflows live in `.github/skills/<skill-name>/SKILL.md`.
+- Prefer reusing vetted community instructions from `github/awesome-copilot` when they match project needs.
+- Keep local instruction files focused on Track Day Legends constraints (Hexagonal Architecture, DDD boundaries, package conventions).
+- Avoid duplicating generic guidance already covered by imported community instruction files.
+- Commit workflow skill: `.github/skills/conventional-commits/SKILL.md`.
+
 ## Avoid by default
 
 - Lombok
