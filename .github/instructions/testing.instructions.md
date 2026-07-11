@@ -1,10 +1,12 @@
 ---
 applyTo: "src/test/java/**/*.java"
-description: "Testing strategy for Track Day Legends API"
+description: "Layered testing strategy for Track Day Legends API (complements community JUnit assertions rules)"
 ---
 
 # Testing Rules
 
+- This file defines project-specific test architecture only.
+- Assertion-level style and JUnit 5 assertion patterns are delegated to the community file `.github/instructions/community-java-junit5-assertions.instructions.md`.
 - Domain tests use pure JUnit 5 with no Spring context.
 - Application tests use Mockito to mock outbound ports.
 - Web adapter tests use `@WebMvcTest`.
