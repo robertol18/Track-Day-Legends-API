@@ -8,6 +8,14 @@ The application models track-focused cars and their technical variants through t
 
 The goal is to keep the domain expressive, the application layer framework-agnostic, and the adapters isolated from business rules.
 
+## Instruction Organization
+
+- Keep global project guidance in this file.
+- Keep file-pattern and task-specific guidance in `.github/instructions/*.instructions.md`.
+- Keep reusable task workflows in `.github/skills/<skill-name>/SKILL.md`.
+- Reuse community-maintained instruction files from `github/awesome-copilot` whenever they fit the use case.
+- Add local overlays only for repository-specific constraints that are not covered by community files.
+
 ## Architectural Principles
 
 - **Dependency Inversion**: all dependencies must point inward toward the Domain layer.
