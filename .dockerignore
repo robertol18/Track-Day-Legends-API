@@ -1,0 +1,17 @@
+# VCS and CI
+.git
+.gitignore
+.github
+
+# Local/build artifacts
+target
+*.log
+
+# Kubernetes/Helm artifacts are not required to build the image
+helm
+
+# IDE/system files
+.idea
+.vscode
+*.iml
+.DS_Store

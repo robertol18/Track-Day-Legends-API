@@ -196,3 +196,42 @@ curl -X POST "http://localhost:8080/api/car-models" \
 ---
 
 Enjoy burning virtual rubber with the **Track Day Legends API**! 🏎️💨
+
+---
+
+## 🐳 Docker + ☸️ Kubernetes (Helm)
+
+### Build Docker image (multi-stage)
+```bash
+docker build -t ghcr.io/robertol18/track-day-legends-api:1.0.0 .
+```
+
+### Push image (example with GHCR)
+```bash
+docker push ghcr.io/robertol18/track-day-legends-api:1.0.0
+```
+
+### Install/upgrade on Kubernetes with Helm (dev)
+```bash
+helm upgrade --install track-day-legends ./helm/track-day-legends \
+  -f ./helm/track-day-legends/values.yaml \
+  -f ./helm/track-day-legends/values-dev.yaml \
+  --namespace track-day-legends-dev \
+  --create-namespace
+```
+
+### Install/upgrade on Kubernetes with Helm (tst)
+```bash
+helm upgrade --install track-day-legends ./helm/track-day-legends \
+  -f ./helm/track-day-legends/values.yaml \
+  -f ./helm/track-day-legends/values-tst.yaml \
+  --namespace track-day-legends-tst \
+  --create-namespace
+```
+
+### Security notes
+- Do not store real secrets in `values*.yaml`.
+- Use `secret.existingSecret` (or External Secrets/Sealed Secrets) in tst.
+- Kubernetes probes are mapped to Spring Boot Actuator endpoints:
+  - `/actuator/health/liveness`
+  - `/actuator/health/readiness`

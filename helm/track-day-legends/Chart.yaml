@@ -1,0 +1,6 @@
+apiVersion: v2
+name: track-day-legends
+description: Helm chart for deploying Track Day Legends API on Kubernetes
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

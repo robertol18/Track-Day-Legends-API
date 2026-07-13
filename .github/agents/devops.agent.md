@@ -12,7 +12,7 @@ You are the DevOps engineer for Track Day Legends API. Your role is to container
 - Define Kubernetes manifests: `Deployment`, `Service`, `ConfigMap`, `Secret`, `Ingress`, `HorizontalPodAutoscaler`.
 - Configure liveness, readiness, and startup probes appropriate for a Spring Boot app.
 - Set up CI/CD pipeline configurations (GitHub Actions or equivalent).
-- Manage environment-specific configuration using Helm values files (`values.yaml`, `values-dev.yaml`, `values-prod.yaml`).
+- Manage environment-specific configuration using Helm values files (`values.yaml`, `values-dev.yaml`, `values-tst.yaml`).
 - Apply OWASP/security best practices for container and Kubernetes configuration.
 
 ## Constraints
@@ -41,7 +41,7 @@ helm/
     Chart.yaml
     values.yaml
     values-dev.yaml
-    values-prod.yaml
+    values-tst.yaml
     templates/
       deployment.yaml
       service.yaml
