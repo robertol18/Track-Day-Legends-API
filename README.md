@@ -211,26 +211,44 @@ docker build -t ghcr.io/robertol18/track-day-legends-api:1.0.0 .
 docker push ghcr.io/robertol18/track-day-legends-api:1.0.0
 ```
 
+### Local files for private registry access
+- `helm/track-day-legends/values-private.yaml` is a local-only override file ignored by Git.
+- `helm/track-day-legends/create-ghcr-secret.local.sh` is a local-only script ignored by Git.
+
+### Create the GHCR pull secret in Kubernetes
+Update `GHCR_TOKEN` in `helm/track-day-legends/create-ghcr-secret.local.sh` and run the script for the target namespace. The existing `ghcr-pull` secret will be created or updated in place.
+
+```bash
+chmod +x ./helm/track-day-legends/create-ghcr-secret.local.sh
+./helm/track-day-legends/create-ghcr-secret.local.sh track-day-legends-dev
+```
+
 ### Install/upgrade on Kubernetes with Helm (dev)
 ```bash
 helm upgrade --install track-day-legends ./helm/track-day-legends \
   -f ./helm/track-day-legends/values.yaml \
   -f ./helm/track-day-legends/values-dev.yaml \
+  -f ./helm/track-day-legends/values-private.yaml \
   --namespace track-day-legends-dev \
   --create-namespace
 ```
 
 ### Install/upgrade on Kubernetes with Helm (tst)
 ```bash
+./helm/track-day-legends/create-ghcr-secret.local.sh track-day-legends-tst
+
 helm upgrade --install track-day-legends ./helm/track-day-legends \
   -f ./helm/track-day-legends/values.yaml \
   -f ./helm/track-day-legends/values-tst.yaml \
+  -f ./helm/track-day-legends/values-private.yaml \
   --namespace track-day-legends-tst \
   --create-namespace
 ```
 
 ### Security notes
 - Do not store real secrets in `values*.yaml`.
+- Do not store real registry credentials in Git; keep them only in `create-ghcr-secret.local.sh`, which is ignored by Git.
+- If a GHCR token is exposed, revoke it in GitHub, replace `GHCR_TOKEN` in the local script, and run it again.
 - Use `secret.existingSecret` (or External Secrets/Sealed Secrets) in tst.
 - Kubernetes probes are mapped to Spring Boot Actuator endpoints:
   - `/actuator/health/liveness`
