@@ -6,7 +6,25 @@ image:
 
 env:
   SPRING_PROFILES_ACTIVE: "dev"
-  JAVA_TOOL_OPTIONS: "-XX:InitialRAMPercentage=50.0 -XX:MaxRAMPercentage=75.0"
+  JAVA_TOOL_OPTIONS: "-XX:InitialRAMPercentage=50.0 -XX:MaxRAMPercentage=75.0 -javaagent:/otel/opentelemetry-javaagent.jar"
+  OTEL_SERVICE_NAME: "track-day-legends-api"
+  OTEL_RESOURCE_ATTRIBUTES: "service.namespace=track-day-legends,deployment.environment=dev"
+  OTEL_TRACES_EXPORTER: "otlp"
+  OTEL_METRICS_EXPORTER: "otlp"
+  OTEL_LOGS_EXPORTER: "otlp"
+  OTEL_EXPORTER_OTLP_PROTOCOL: "http/protobuf"
+  OTEL_EXPORTER_OTLP_ENDPOINT: "http://otel-collector:4318"
+
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/path: "/actuator/prometheus"
+  prometheus.io/port: "8080"
+
+observability:
+  prometheus:
+    scrapeEnabled: true
+  otelAgent:
+    enabled: true
 
 resources:
   requests:

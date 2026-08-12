@@ -31,7 +31,7 @@ org.hibernate.SQL: DEBUG
 org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 ```
 
-### Production (profile: `prod`)
+### Production (profile: `prd`)
 
 ```properties
 ROOT: WARN
@@ -264,7 +264,7 @@ logger.debug("Query returned {} results in {}ms", resultCount, executionTime);
 
 ### Production
 ```bash
-java -jar track-day-legends-api-1.0.0.jar --spring.profiles.active=prod
+java -jar track-day-legends-api-1.0.0.jar --spring.profiles.active=prd
 ```
 
 ## Log Location

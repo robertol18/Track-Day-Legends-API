@@ -28,7 +28,7 @@ applyTo: 'src/main/java/**/adapter/**/*.java, src/main/java/**/infrastructure/**
 ### Configuration
 
 - Use YAML files (`application.yml`) for externalized configuration.
-- Environment Profiles: Use Spring profiles for different environments (dev, test, prod)
+- Environment Profiles: Use Spring profiles for different environments (dev, tst, prd)
 - Configuration Properties: Use @ConfigurationProperties for type-safe configuration binding
 - Secrets Management: Externalize secrets using environment variables or secret management systems
 

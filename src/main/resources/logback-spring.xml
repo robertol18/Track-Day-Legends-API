@@ -55,7 +55,7 @@
     </springProfile>
 
     <!-- PRODUCTION PROFILE -->
-    <springProfile name="prod">
+    <springProfile name="prd">
         <!-- File appender for production (no console output) -->
         <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <file>logs/application.log</file>

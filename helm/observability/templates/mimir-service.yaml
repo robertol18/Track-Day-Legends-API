@@ -1,0 +1,23 @@
+{{- if .Values.mimir.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "observability.mimir.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "observability.mimir.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: {{ .Values.mimir.service.port }}
+      protocol: TCP
+      targetPort: http
+    - name: grpc
+      port: {{ .Values.mimir.service.grpcPort }}
+      protocol: TCP
+      targetPort: grpc
+  selector:
+    app.kubernetes.io/name: {{ include "observability.mimir.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}

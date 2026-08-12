@@ -1,0 +1,59 @@
+{{- if .Values.mimir.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "observability.mimir.fullname" . }}-config
+  labels:
+    app.kubernetes.io/name: {{ include "observability.mimir.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+data:
+  mimir.yaml: |
+    multitenancy_enabled: false
+
+    server:
+      http_listen_port: {{ .Values.mimir.service.port }}
+      grpc_listen_port: {{ .Values.mimir.service.grpcPort }}
+      log_level: info
+
+    common:
+      storage:
+        backend: filesystem
+        filesystem:
+          dir: /data/blocks
+
+    blocks_storage:
+      backend: filesystem
+      filesystem:
+        dir: /data/tsdb
+      tsdb:
+        dir: /data/tsdb
+      bucket_store:
+        sync_dir: /data/tsdb-sync
+
+    compactor:
+      data_dir: /data/compactor
+
+    distributor:
+      ring:
+        kvstore:
+          store: inmemory
+
+    ingester:
+      ring:
+        kvstore:
+          store: inmemory
+        replication_factor: 1
+
+    ruler_storage:
+      backend: filesystem
+      filesystem:
+        dir: /data/ruler
+
+    alertmanager_storage:
+      backend: filesystem
+      filesystem:
+        dir: /data/alertmanager
+
+    limits:
+      compactor_blocks_retention_period: 168h
+{{- end }}

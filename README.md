@@ -245,6 +245,39 @@ helm upgrade --install track-day-legends ./helm/track-day-legends \
   --create-namespace
 ```
 
+### Install/upgrade Observability Stack with Helm (dev)
+```bash
+helm dependency build ./helm/observability
+
+helm upgrade --install track-day-observability ./helm/observability \
+  -f ./helm/observability/values.yaml \
+  -f ./helm/observability/values-dev.yaml \
+  --namespace track-day-legends-dev \
+  --create-namespace
+```
+
+### Install/upgrade Observability Stack with Helm (tst)
+```bash
+helm dependency build ./helm/observability
+
+helm upgrade --install track-day-observability ./helm/observability \
+  -f ./helm/observability/values.yaml \
+  -f ./helm/observability/values-tst.yaml \
+  --namespace track-day-legends-tst \
+  --create-namespace
+```
+
+### Observability endpoints and signal flow
+- OpenTelemetry endpoint consumed by the API chart: `http://otel-collector:4318`
+- Metrics pipeline:
+  - App metrics (`/actuator/prometheus`) scraped by Prometheus
+  - OTEL metrics exported to Mimir (`/api/v1/push`)
+- Logs pipeline:
+  - OTEL logs exported by Collector to Loki (`/otlp`)
+- Traces pipeline:
+  - OTEL traces exported by Collector to Tempo (OTLP gRPC `:4317`)
+- Grafana preprovisions datasources for Prometheus, Mimir, Loki, and Tempo.
+
 ### Security notes
 - Do not store real secrets in `values*.yaml`.
 - Do not store real registry credentials in Git; keep them only in `create-ghcr-secret.local.sh`, which is ignored by Git.

@@ -5,7 +5,7 @@
 ### 1. Logging Configuration (Logback)
 
 #### File: `src/main/resources/logback-spring.xml`
-- **Profiles**: `dev` (default) and `prod`
+- **Profiles**: `dev` (default) and `prd`
 - **Development**:
   - Console output with a readable pattern
   - Log files rotated at 10MB and retained for 30 days
@@ -35,7 +35,7 @@ logging.level.org.hibernate.SQL=DEBUG
 logging.file.name=logs/application.log
 ```
 
-#### New: `src/main/resources/application-prod.properties`
+#### New: `src/main/resources/application-prd.properties`
 - Production-optimized configuration
 - Reduced levels (WARN/INFO)
 - Schema validation instead of auto-update
@@ -121,7 +121,7 @@ mvn spring-boot:run -Dspring-boot.run.arguments="--spring.profiles.active=dev"
 
 ### Run in production
 ```bash
-java -jar track-day-legends-api-1.0.0.jar --spring.profiles.active=prod
+java -jar track-day-legends-api-1.0.0.jar --spring.profiles.active=prd
 ```
 
 ### View logs
@@ -143,9 +143,9 @@ zcat logs/application-2026-08-05.1.log.gz | head -100
 
 ## Implementation Checklist
 
-- [x] Create `logback-spring.xml` with dev/prod profiles
+- [x] Create `logback-spring.xml` with dev/prd profiles
 - [x] Update `application.properties` (disable show-sql)
-- [x] Create optimized `application-prod.properties`
+- [x] Create optimized `application-prd.properties`
 - [x] Add logging to CarModelController
 - [x] Add logging to GlobalExceptionHandler
 - [x] Add logging to CarModelService

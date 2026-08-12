@@ -1,0 +1,35 @@
+targetApp:
+  serviceName: track-day-legends
+  servicePort: 80
+  metricsPath: /actuator/prometheus
+
+grafana:
+  adminPassword: admin-tst
+  persistence:
+    size: 10Gi
+
+prometheus:
+  server:
+    retention: 15d
+    persistentVolume:
+      size: 20Gi
+
+loki:
+  singleBinary:
+    persistence:
+      size: 20Gi
+
+tempo:
+  persistence:
+    size: 10Gi
+
+mimir:
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: "2"
+      memory: 4Gi
+  persistence:
+    size: 30Gi

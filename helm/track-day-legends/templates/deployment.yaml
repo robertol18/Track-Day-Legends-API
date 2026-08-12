@@ -30,6 +30,28 @@ spec:
       {{- end }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if .Values.observability.otelAgent.enabled }}
+      initContainers:
+        - name: download-otel-agent
+          image: {{ .Values.observability.otelAgent.image | quote }}
+          imagePullPolicy: IfNotPresent
+          command: ["/bin/sh", "-ec"]
+          args:
+            - >
+              curl -fsSL {{ .Values.observability.otelAgent.downloadUrl | quote }}
+              -o {{ .Values.observability.otelAgent.mountPath }}/opentelemetry-javaagent.jar
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: otel-agent
+              mountPath: {{ .Values.observability.otelAgent.mountPath }}
+            - name: tmp
+              mountPath: /tmp
+      {{- end }}
       containers:
         - name: {{ include "track-day-legends.name" . }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -79,9 +101,17 @@ spec:
           volumeMounts:
             - name: tmp
               mountPath: /tmp
+            {{- if .Values.observability.otelAgent.enabled }}
+            - name: otel-agent
+              mountPath: {{ .Values.observability.otelAgent.mountPath }}
+            {{- end }}
       volumes:
         - name: tmp
           emptyDir: {}
+        {{- if .Values.observability.otelAgent.enabled }}
+        - name: otel-agent
+          emptyDir: {}
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

@@ -1,0 +1,209 @@
+# Default values for Track Day Legends observability stack.
+
+nameOverride: ""
+fullnameOverride: ""
+
+targetApp:
+  serviceName: track-day-legends
+  servicePort: 80
+  metricsPath: /actuator/prometheus
+
+grafana:
+  fullnameOverride: grafana
+  replicas: 1
+  testFramework:
+    enabled: false
+  persistence:
+    enabled: true
+    size: 5Gi
+  adminUser: admin
+  adminPassword: admin
+  grafana.ini:
+    server:
+      root_url: http://localhost:3000
+    users:
+      viewers_can_edit: false
+    auth.anonymous:
+      enabled: false
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: Prometheus
+          uid: prometheus
+          type: prometheus
+          access: proxy
+          url: http://prometheus-server
+          isDefault: true
+          editable: true
+        - name: Mimir
+          uid: mimir
+          type: prometheus
+          access: proxy
+          url: http://mimir:8080/prometheus
+          editable: true
+        - name: Loki
+          uid: loki
+          type: loki
+          access: proxy
+          url: http://loki-gateway
+          editable: true
+        - name: Tempo
+          uid: tempo
+          type: tempo
+          access: proxy
+          url: http://tempo:3200
+          editable: true
+          jsonData:
+            httpMethod: GET
+            serviceMap:
+              datasourceUid: prometheus
+            tracesToLogsV2:
+              datasourceUid: loki
+              spanStartTimeShift: -15m
+              spanEndTimeShift: 15m
+              tags:
+                - key: service.name
+                  value: service_name
+                - key: k8s.namespace.name
+                  value: namespace
+
+prometheus:
+  fullnameOverride: prometheus
+  alertmanager:
+    enabled: false
+  kube-state-metrics:
+    enabled: false
+  prometheus-node-exporter:
+    enabled: false
+  prometheus-pushgateway:
+    enabled: false
+  server:
+    persistentVolume:
+      enabled: true
+      size: 20Gi
+    retention: 15d
+  extraScrapeConfigs: |
+    - job_name: 'track-day-legends-api'
+      metrics_path: /actuator/prometheus
+      static_configs:
+        - targets: ['track-day-legends:80']
+
+loki:
+  fullnameOverride: loki
+  deploymentMode: SingleBinary
+  test:
+    enabled: false
+  lokiCanary:
+    enabled: false
+  loki:
+    useTestSchema: true
+    storage:
+      type: filesystem
+      bucketNames:
+        chunks: chunks
+        ruler: ruler
+        admin: admin
+  singleBinary:
+    replicas: 1
+    persistence:
+      enabled: true
+      size: 20Gi
+  write:
+    replicas: 0
+  read:
+    replicas: 0
+  backend:
+    replicas: 0
+
+tempo:
+  fullnameOverride: tempo
+  replicas: 1
+  serviceMonitor:
+    enabled: false
+  persistence:
+    enabled: true
+    size: 10Gi
+  tempo:
+    reportingEnabled: false
+    storage:
+      trace:
+        backend: local
+        local:
+          path: /var/tempo/traces
+        wal:
+          path: /var/tempo/wal
+
+opentelemetry-collector:
+  fullnameOverride: otel-collector
+  mode: deployment
+  replicaCount: 1
+  image:
+    repository: otel/opentelemetry-collector-k8s
+  config:
+    exporters:
+      debug: {}
+      otlp/tempo:
+        endpoint: tempo:4317
+        tls:
+          insecure: true
+      otlphttp/loki:
+        endpoint: http://loki-gateway/otlp
+      prometheusremotewrite/mimir:
+        endpoint: http://mimir:8080/api/v1/push
+    extensions:
+      health_check:
+        endpoint: ${env:MY_POD_IP}:13133
+    processors:
+      batch: {}
+      memory_limiter:
+        check_interval: 5s
+        limit_percentage: 80
+        spike_limit_percentage: 25
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+            endpoint: ${env:MY_POD_IP}:4317
+          http:
+            endpoint: ${env:MY_POD_IP}:4318
+    service:
+      extensions:
+        - health_check
+      pipelines:
+        traces:
+          receivers: [otlp]
+          processors: [memory_limiter, batch]
+          exporters: [otlp/tempo, debug]
+        logs:
+          receivers: [otlp]
+          processors: [memory_limiter, batch]
+          exporters: [otlphttp/loki, debug]
+        metrics:
+          receivers: [otlp]
+          processors: [memory_limiter, batch]
+          exporters: [prometheusremotewrite/mimir, debug]
+
+mimir:
+  enabled: true
+  image:
+    repository: grafana/mimir
+    tag: 2.17.0
+    pullPolicy: IfNotPresent
+  replicaCount: 1
+  service:
+    port: 8080
+    grpcPort: 9095
+  persistence:
+    enabled: true
+    size: 20Gi
+    accessModes:
+      - ReadWriteOnce
+    storageClassName: ""
+  resources:
+    requests:
+      cpu: 200m
+      memory: 512Mi
+    limits:
+      cpu: "1"
+      memory: 2Gi

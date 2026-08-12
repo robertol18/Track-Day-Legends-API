@@ -22,6 +22,17 @@ service:
 podAnnotations: {}
 podLabels: {}
 
+observability:
+  prometheus:
+    scrapeEnabled: false
+    path: /actuator/prometheus
+    port: "8080"
+  otelAgent:
+    enabled: false
+    image: curlimages/curl:8.9.1
+    downloadUrl: https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/download/v2.12.0/opentelemetry-javaagent.jar
+    mountPath: /otel
+
 # Harden pod defaults. Service account token is disabled by default for this API.
 automountServiceAccountToken: false
 
