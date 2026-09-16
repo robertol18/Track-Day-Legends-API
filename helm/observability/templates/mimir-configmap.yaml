@@ -10,6 +10,9 @@ data:
   mimir.yaml: |
     multitenancy_enabled: false
 
+    activity_tracker:
+      filepath: /data/metrics-activity.log
+
     server:
       http_listen_port: {{ .Values.mimir.service.port }}
       grpc_listen_port: {{ .Values.mimir.service.grpcPort }}
@@ -24,7 +27,7 @@ data:
     blocks_storage:
       backend: filesystem
       filesystem:
-        dir: /data/tsdb
+        dir: /data/blocks-storage
       tsdb:
         dir: /data/tsdb
       bucket_store:
@@ -44,10 +47,16 @@ data:
           store: inmemory
         replication_factor: 1
 
+    ruler:
+      rule_path: /data/ruler-rules
+
     ruler_storage:
       backend: filesystem
       filesystem:
         dir: /data/ruler
+
+    alertmanager:
+      data_dir: /data/alertmanager-data
 
     alertmanager_storage:
       backend: filesystem
