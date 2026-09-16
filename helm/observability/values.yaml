@@ -139,7 +139,7 @@ opentelemetry-collector:
   mode: deployment
   replicaCount: 1
   image:
-    repository: otel/opentelemetry-collector-k8s
+    repository: otel/opentelemetry-collector-contrib
   config:
     exporters:
       debug: {}

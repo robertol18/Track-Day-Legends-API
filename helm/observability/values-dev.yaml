@@ -18,6 +18,11 @@ loki:
   singleBinary:
     persistence:
       size: 10Gi
+  chunksCache:
+    # Default allocatedMemory (8192Mi) requests ~9.8Gi, more than this dev node has.
+    allocatedMemory: 512
+  resultsCache:
+    allocatedMemory: 256
 
 tempo:
   persistence:
